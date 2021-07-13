@@ -1,0 +1,7 @@
+{
+  "name": "tga",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "tga",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
