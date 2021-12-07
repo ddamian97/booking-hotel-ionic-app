@@ -1,0 +1,176 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="">
+    <div class="buttons-container ion-margin-start">
+      <ion-button (click)="goBack()" fill="none" size="small" color="medium"  class="ion-margin-end">
+        <img src="assets/img/back-arrow.svg"/>
+      </ion-button>
+    </div>
+    <div class="content-container ion-margin-start ion-margin-bottom">
+      <ion-label class="medium">Hotel {{data[1]}}, {{data[2]}}, {{data[3]}}</ion-label>
+      <div class="base-info-container">
+        <div class="info-item">
+          <div class="info-item-label">Cena:</div>
+          <div class="info-item-value">{{data[6]}}zł (doba)</div>
+        </div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="ion-padding-top" *ngIf="data">
+  <ion-card class="item-container">
+  <div class="thumb-container ion-no-margin">
+    <div class="img-container">
+      <img src="assets/hotels/hotel-{{data[0]}}/thumb.jpg"/>
+    </div>
+  </div>
+  </ion-card>
+  <form [formGroup]="bookingForm" (ngSubmit)="formSubmit()">
+    <div class=" ion-card-container ion-margin-top" >
+      <ion-label class="ion-margin ion-margin-top ">Imię:</ion-label>
+      <ion-card class="item-container">
+        <div class="item ion-no-padding">
+          <div class="row ion-no-padding">
+            <div class="column ion-no-padding">
+              <div class="input-container">
+                <ion-input formControlName="name" class="ion-padding ion-input-name" placeholder=""></ion-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card>
+      <div class="notification-container">
+        <div class="notification-text-container">
+      <span *ngIf="this.name.hasError('required') &&
+       this.name.touched" class="ion-padding">Niepoprawne imię</span>
+        </div>
+        <span *ngIf="this.name.hasError('minlength') &&
+       this.name.touched" class="ion-padding">Wprowadzone imię jest za krótkie</span>
+        <span *ngIf="this.name.hasError('maxlength') &&
+       this.name.touched" class="ion-padding">Wprowadzone imię jest za długie</span>
+      </div>
+    </div>
+    <div class="ion-card-container ion-margin-top" >
+      <ion-label class="ion-margin ion-margin-top ">Nazwisko:</ion-label>
+      <ion-card class="item-container">
+        <div class="item ion-no-padding">
+          <div class="row ion-no-padding">
+            <div class="column ion-no-padding">
+              <div class="input-container">
+                <ion-input  formControlName="lastName" class="ion-padding ion-input-last-name" placeholder=""></ion-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card>
+      <div class="notification-container">
+        <div class="notification-text-container">
+      <span *ngIf="this.lastName.hasError('required') &&
+       this.lastName.touched" class="ion-padding">Niepoprawne nazwisko</span>
+        </div>
+      </div>
+    </div>
+    <div class="ion-card-container ion-margin-top" >
+      <ion-label class="ion-margin ion-margin-top ">Adres email:</ion-label>
+      <ion-card class="item-container">
+        <div class="item ion-no-padding">
+          <div class="row ion-no-padding">
+            <div class="column ion-no-padding">
+              <div class="input-container">
+                <ion-input formControlName="email" class="ion-padding ion-input-email" placeholder=""></ion-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card>
+      <div class="notification-container">
+        <div class="notification-text-container">
+      <span *ngIf="(this.email.hasError('required') &&
+       this.email.touched) || (this.email.hasError('email') && this.email.touched)" class="ion-padding">Niepoprawny adres email</span>
+        </div>
+      </div>
+    </div>
+    <div class="ion-card-container ion-margin-top" >
+      <ion-label class="ion-margin ion-margin-top ">Pokój:</ion-label>
+      <ion-card class="item-container">
+        <div class="item ion-no-padding">
+          <div class="row ion-no-padding">
+            <div class="column ion-no-padding">
+              <div class="input-container">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                    <ion-select formControlName="roomType" placeholder="Wybierz" okText="Potwierdź" cancelText="Anuluj" class="ion-padding">
+                      <ion-select-option class="ion-padding" *ngFor="let room of roomTypes()" value="{{room}}">{{room}}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card>
+      <div class="notification-container">
+        <div class="notification-text-container">
+      <span *ngIf="this.roomType.hasError('required') &&
+       this.roomType.touched" class="ion-padding">Proszę wybrać typ pokoju</span>
+        </div>
+      </div>
+    </div>
+    <div class="ion-card-container ion-margin-top" >
+      <ion-label class="ion-margin ion-margin-top ">Od:</ion-label>
+      <ion-card class="item-container">
+        <div class="item ion-no-padding">
+          <div class="row ion-no-padding">
+            <div class="column ion-no-padding">
+              <div class="input-container">
+                <ion-item class="ion-item-date">
+                  <ion-label mode="ios" position="stacked">DD/MM/RRRR</ion-label>
+                  <ion-datetime class="ion-no-padding ion-margin-bottom" formControlName="startDate" displayFormat="DD/MM/YYYY" [min]="currentDate" max="2030-01-01" value="2002-09-23T15:03:46.789"></ion-datetime>
+                </ion-item>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card>
+      <div class="notification-container">
+        <div class="notification-text-container">
+      <span *ngIf="this.startDate.hasError('required') &&
+       this.startDate.touched" class="ion-padding">Proszę wybrać typ pokoju</span>
+        </div>
+      </div>
+    </div>
+    <div class="ion-card-container ion-margin-top" >
+      <ion-label class="ion-margin ion-margin-top ">Do:</ion-label>
+      <ion-card class="item-container">
+        <div class="item ion-no-padding">
+          <div class="row ion-no-padding">
+            <div class="column ion-no-padding">
+              <div class="input-container">
+                <ion-item class="ion-item-date">
+                  <ion-label mode="ios" position="stacked">DD/MM/RRRR</ion-label>
+                  <ion-datetime class="ion-no-padding ion-margin-bottom" formControlName="endDate" displayFormat="DD/MM/YYYY" [min]="currentDate" max="2030-01-01" value="2002-09-23T15:03:46.789"></ion-datetime>
+                </ion-item>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card>
+      <div class="notification-container">
+        <div class="notification-text-container">
+      <span *ngIf="this.endDate.hasError('required') &&
+       this.endDate.touched" class="ion-padding">Proszę wybrać typ pokoju</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-content">
+      <div class="buttons-container book-buttons-container fixed-container fixed-bottom-container">
+        <ion-button class="ion-no-margin" expand="full" type="submit" [disabled]="bookingForm.invalid" size="large">
+          <span>Dalej</span>
+          <img src="assets/img/arrow.svg"/>
+        </ion-button>
+      </div>
+    </div>
+  </form>
+</ion-content>

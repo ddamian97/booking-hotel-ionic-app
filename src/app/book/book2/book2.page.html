@@ -1,0 +1,117 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="">
+    <div class="buttons-container ion-margin-start">
+      <ion-button (click)="goBack()" fill="none" size="small" color="medium"  class="ion-margin-end">
+        <img src="assets/img/back-arrow.svg"/>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="ion-padding-top">
+  <div *ngIf="bookingDetails && (getDays() > 0)">
+    <ion-card class="item-container">
+      <div class="thumb-container ion-no-margin">
+        <div class="img-container">
+          <img src="assets/hotels/hotel-{{bookingDetails.data[0]}}/thumb.jpg"/>
+        </div>
+      </div>
+    </ion-card>
+    <ion-card class="item-container item-title">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="large ion-text-center">Podsumowanie</ion-label>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="medium">Hotel {{bookingDetails.data[1]}}, {{bookingDetails.data[2]}}, {{bookingDetails.data[3]}}</ion-label>
+        <div class="base-info-container">
+        </div>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="medium">Imię: {{bookingDetails.name}}</ion-label>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="medium">Nazwisko: {{bookingDetails.lastName}}</ion-label>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="medium">Adres email: {{bookingDetails.email}}</ion-label>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="medium">Cena za dobę: {{bookingDetails.data[6]}}zł</ion-label>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="medium">Cena za wynajem: {{getPrice()}}zł</ion-label>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="medium">Pokój: {{bookingDetails.roomType}}</ion-label>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="medium">Data rozpoczęcia pobytu: {{startDate()}}</ion-label>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="medium">Data zakończenia pobytu: {{endDate()}}</ion-label>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-label class="medium">Ilość dni: {{getDays()}}</ion-label>
+      </div>
+    </ion-card>
+    <ion-card class="item-container">
+      <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+        <ion-button (click)="goBack()" fill="none" size="small" color="medium"  class="ion-margin-end">
+          <img class="ion-margin-horizontal" src="assets/img/back-arrow.svg"/>
+          <span>Powrót do formularza</span>
+        </ion-button>
+      </div>
+    </ion-card>
+  </div>
+  <ion-card class="item-container" *ngIf="!bookingDetails">
+    <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+      <ion-label class="medium">Brak danych</ion-label>
+      <div class="buttons-container ion-margin-top ion-margin-start">
+        <ion-button (click)="goBack()" fill="none" size="small" color="medium"  class="ion-margin-end">
+          <img class="ion-margin-horizontal" src="assets/img/back-arrow.svg"/>
+          <span>Powrót do formularza</span>
+        </ion-button>
+      </div>
+    </div>
+  </ion-card>
+  <ion-card class="item-container" *ngIf="(getDays() < 1)">
+    <div class="content-container ion-margin-top ion-margin-start ion-margin-bottom">
+      <ion-label class="medium">Błędnie wprowadzona data. Dzień rozpoczęcia musi być wyznaczony przed dniem zakończenia pobytu.</ion-label>
+      <div class="buttons-container ion-margin-top ion-margin-start">
+        <ion-button (click)="goBack()" fill="none" size="small" color="medium"  class="ion-margin-end">
+          <img class="ion-margin-horizontal" src="assets/img/back-arrow.svg"/>
+          <span>Powrót do formularza</span>
+        </ion-button>
+      </div>
+    </div>
+  </ion-card>
+  <div class="bottom-content">
+    <div class="buttons-container book-buttons-container fixed-container fixed-bottom-container">
+      <ion-button (click)="showConfirmAlert()" class="ion-no-margin" expand="full" type="submit" size="large">
+        <span>Potwierdzam</span>
+        <img src="assets/img/arrow.svg"/>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
